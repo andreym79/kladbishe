@@ -20,10 +20,27 @@ if [ -f "$DIR/.env" ]; then
 fi
 
 say "1/4 Проверяю сервер"
-if ! docker compose version >/dev/null 2>&1; then
+# docker compose: пакет Docker (docker-compose-plugin), пакет Ubuntu (docker-compose-v2) или официальный файл с GitHub
+install_compose() {
   export DEBIAN_FRONTEND=noninteractive
-  apt-get -o DPkg::Lock::Timeout=300 install -y -q docker-compose-plugin >/dev/null || fail "не удалось поставить docker compose"
+  apt-get -o DPkg::Lock::Timeout=300 update -q >/dev/null 2>&1 || true
+  for pkg in docker-compose-plugin docker-compose-v2; do
+    apt-get -o DPkg::Lock::Timeout=300 install -y -q "$pkg" >/dev/null 2>&1 && return 0
+  done
+  local url dir sum
+  # v2: works with older Docker engines too (a new major may need a newer engine than the server has)
+  url="https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-$(uname -m)"
+  dir=/usr/local/lib/docker/cli-plugins
+  mkdir -p "$dir"
+  curl -fsSL "$url" -o "$dir/docker-compose.new" && sum=$(curl -fsSL "$url.sha256" | cut -d' ' -f1) || return 1
+  echo "$sum  $dir/docker-compose.new" | sha256sum -c --quiet || { rm -f "$dir/docker-compose.new"; return 1; }
+  chmod +x "$dir/docker-compose.new" && mv "$dir/docker-compose.new" "$dir/docker-compose"
+}
+if ! docker compose version >/dev/null 2>&1; then
+  echo "Ставлю docker compose…"
+  install_compose && docker compose version >/dev/null 2>&1 || fail "не удалось поставить docker compose"
 fi
+echo "Docker: $(docker version --format '{{.Server.Version}}' 2>/dev/null), $(docker compose version --short 2>/dev/null)"
 IP=$(ip -4 route get 1.1.1.1 2>/dev/null | awk '{for (i = 1; i < NF; i++) if ($i == "src") print $(i + 1)}')
 DNS=$(getent ahostsv4 "$DOMAIN" | awk 'NR == 1 {print $1}' || true)
 [ "$DNS" = "$IP" ] || fail "$DOMAIN указывает на «${DNS:-никуда}», а адрес сервера $IP. Добавьте в DNS (панель Beget) запись A: crm → $IP и подождите 10–15 минут."
