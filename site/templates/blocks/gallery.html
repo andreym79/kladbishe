@@ -1,0 +1,23 @@
+{%- set b = block.data -%}
+{%- set one = '(min-width: 1240px) 370px, (min-width: 700px) 45vw, calc(100vw - 40px)' -%}
+{%- set half = '(min-width: 1240px) 180px, (min-width: 700px) 22vw, calc(50vw - 24px)' -%}
+<section id="gallery" class="sec light">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+{% if b.title or b.text %}<div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
+{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}{% if b.text %}<p style="margin: 0; color: #5C5850">{{ b.text | nl2br }}</p>
+{% endif %}</div>
+{% endif %}<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 24px">
+{% for g in b['items'] or [] %}<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+{% if g.photo_after %}<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+{% for ph, label in [(g.photo, 'До'), (g.photo_after, 'После')] %}<div style="position: relative">
+{{ m.picture(ph, alt=(g.caption or '') ~ ' — ' ~ label|lower, sizes=half, style='display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px') }}
+<span style="position: absolute; left: 8px; bottom: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(20,20,20,0.72); color: #F4F1EB; font-size: 13px">{{ label }}</span>
+</div>
+{% endfor %}</div>
+{% else %}{{ m.picture(g.photo, alt=g.caption or '', sizes=one, style='display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px') }}
+{% endif %}{% if g.caption %}<figcaption style="color: #5C5850; font-size: 16px">{{ g.caption }}</figcaption>
+{% endif %}</figure>
+{% endfor %}</div>
+</div>
+</section>

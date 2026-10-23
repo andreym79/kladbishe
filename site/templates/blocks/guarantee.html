@@ -4,5 +4,6 @@
 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F4F1EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
 {{ m.h2(b.title or '', 'clamp(36px, 4.6vw, 64px)') }}
 {% if b.text %}<p style="margin: 0; color: #CFCAC0; max-width: 600px">{{ b.text | nl2br }}</p>
+{% endif %}{% if b.photo %}{{ m.picture(b.photo, alt='', sizes='(min-width: 760px) 720px, calc(100vw - 40px)', style='display: block; width: 100%; max-width: 720px; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px') }}
 {% endif %}</div>
 </section>

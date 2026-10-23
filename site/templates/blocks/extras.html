@@ -2,14 +2,16 @@
 <section class="sec light">
 <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px">
 {% if b.services_title or b.services %}<div style="display: flex; flex-direction: column; gap: 24px; padding: clamp(28px, 4vw, 48px); border: 1px solid #E3DED4; border-radius: 8px; background: #FBFAF7">
-<h3 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 36px; line-height: 1.15">{{ b.services_title or '' }}</h3>
+{% if b.services_photo %}{{ m.picture(b.services_photo, alt='', sizes='(min-width: 1240px) 500px, (min-width: 700px) 42vw, calc(100vw - 96px)', style='display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px') }}
+{% endif %}<h3 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 36px; line-height: 1.15">{{ b.services_title or '' }}</h3>
 <div style="display: flex; flex-direction: column; gap: 10px; color: #3A3833">
 {% for it in b.services or [] %}<div>{{ it.text }}</div>
 {% endfor %}</div>
 {% if b.services_note %}<div style="color: #5C5850; font-size: 16px">{{ b.services_note }}</div>
 {% endif %}</div>
 {% endif %}{% if b.dates_title %}<div style="display: flex; flex-direction: column; gap: 24px; padding: clamp(28px, 4vw, 48px); border-radius: 8px; background: #141414; color: #F4F1EB">
-<h3 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 36px; line-height: 1.15">{{ b.dates_title }}</h3>
+{% if b.dates_photo %}{{ m.picture(b.dates_photo, alt='', sizes='(min-width: 1240px) 500px, (min-width: 700px) 42vw, calc(100vw - 96px)', style='display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px') }}
+{% endif %}<h3 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 36px; line-height: 1.15">{{ b.dates_title }}</h3>
 <p style="margin: 0; color: #CFCAC0; flex-grow: 1">{{ (b.dates_text or '') | nl2br }}</p>
 {% if b.dates_button %}<button type="button" data-order="{{ first_tariff }}" style="display: inline-flex; align-self: flex-start; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 999px; border: none; background: #0038B8; color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; cursor: pointer">{{ b.dates_button }}</button>
 {% endif %}</div>

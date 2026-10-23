@@ -239,6 +239,12 @@
        "label": "Пояснение",
        "type": "textarea",
        "max": 300
+      },
+      {
+       "key": "photo",
+       "label": "Фото",
+       "type": "image",
+       "help": "Над шагом, обрезается до 4 : 3"
       }
      ],
      "itemLabel": "Шаг",
@@ -282,6 +288,12 @@
        "type": "text",
        "required": true,
        "max": 60
+      },
+      {
+       "key": "photo",
+       "label": "Фото",
+       "type": "image",
+       "help": "Сверху карточки, обрезается до 3 : 2. Пусто — без фото"
       },
       {
        "key": "price",
@@ -496,6 +508,18 @@
      "max": 400
     },
     {
+     "key": "photo",
+     "label": "Фото",
+     "type": "image",
+     "help": "Широкое, под заголовком (16 : 9)"
+    },
+    {
+     "key": "photo_alt",
+     "label": "Описание фото",
+     "type": "text",
+     "max": 160
+    },
+    {
      "key": "groups",
      "label": "Колонки",
      "type": "list",
@@ -545,6 +569,12 @@
      "label": "Текст",
      "type": "textarea",
      "max": 400
+    },
+    {
+     "key": "photo",
+     "label": "Фото",
+     "type": "image",
+     "help": "Под текстом (16 : 9)"
     }
    ]
   },
@@ -558,6 +588,12 @@
      "label": "Заголовок доп. услуг",
      "type": "text",
      "max": 120
+    },
+    {
+     "key": "services_photo",
+     "label": "Фото доп. услуг",
+     "type": "image",
+     "help": "Сверху карточки (16 : 9)"
     },
     {
      "key": "services",
@@ -588,6 +624,12 @@
      "max": 120
     },
     {
+     "key": "dates_photo",
+     "label": "Фото к памятным датам",
+     "type": "image",
+     "help": "Сверху тёмной карточки (16 : 9)"
+    },
+    {
      "key": "dates_text",
      "label": "Текст про памятные даты",
      "type": "textarea",
@@ -598,6 +640,55 @@
      "label": "Кнопка",
      "type": "text",
      "max": 40
+    }
+   ]
+  },
+  {
+   "type": "gallery",
+   "label": "Галерея работ",
+   "max": 1,
+   "help": "Фото выполненных работ. Добавьте второе фото — получится пара «до / после». Меню может вести сюда по ссылке #gallery",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "text",
+     "label": "Текст под заголовком",
+     "type": "textarea",
+     "max": 400
+    },
+    {
+     "key": "items",
+     "label": "Фото",
+     "type": "list",
+     "itemLabel": "Работа",
+     "maxItems": 24,
+     "fields": [
+      {
+       "key": "photo",
+       "label": "Фото",
+       "type": "image",
+       "required": true,
+       "help": "Если есть фото «после» — это фото «до»"
+      },
+      {
+       "key": "photo_after",
+       "label": "Фото «после»",
+       "type": "image",
+       "help": "Пусто — одно фото"
+      },
+      {
+       "key": "caption",
+       "label": "Подпись",
+       "type": "text",
+       "max": 160,
+       "help": "Например: Востряковское кладбище, май 2026"
+      }
+     ]
     }
    ]
   },

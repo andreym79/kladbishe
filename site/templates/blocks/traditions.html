@@ -5,7 +5,8 @@
 {% if b.title %}{{ m.h2(b.title) }}
 {% endif %}{% if b.text %}<p style="margin: 0; color: #5C5850">{{ b.text | nl2br }}</p>
 {% endif %}</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 40px">
+{% if b.photo %}{{ m.picture(b.photo, alt=b.photo_alt or '', sizes='(min-width: 1240px) 1056px, calc(100vw - 104px)', style='display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px') }}
+{% endif %}<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 40px">
 {% for g in b.groups or [] %}<div style="display: flex; flex-direction: column; gap: 14px">
 <div style="font-weight: 700; font-size: 20px">{{ g.title }}</div>
 {% for it in g['items'] or [] %}<div style="color: #3A3833">{{ it.text }}</div>
