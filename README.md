@@ -1,49 +1,43 @@
 # Лендинг «Хранители памяти (graveangels)»
 
-Одностраничный сайт: уход за могилами в Москве для семей в Израиле.
+Одностраничный сайт: уход за могилами в Москве для семей в Израиле. Работает на https://graveangels.ru.
 
 | Файл | Что это |
 | --- | --- |
 | `index.html` | Весь сайт: разметка, стили и форма заказа в одном файле |
-| `worker/telegram-worker.js` | Посредник, который пересылает заказы в Telegram-бота |
-| `.nojekyll` | Служебный файл для GitHub Pages, не удалять |
+| `images/` | Фото (на сайте используются `.webp`) |
+| `fonts/` | Шрифты Cormorant Garamond и Manrope — грузятся с нашего сервера, без Google Fonts |
+| `deploy/install.sh` | Установка сайта на сервер с нуля |
+| `deploy/server-tune.sh` | Донастройка уже установленного сервера (HTTP/2, кэш) |
+| `worker/telegram-worker.js` | Старый посредник для Cloudflare — на сервере не нужен, оставлен на всякий случай |
 
-## 1. Разместить сайт на GitHub Pages
+## Как устроено на сервере
 
-1. На github.com нажмите **New repository**, назовите его, например, `pamyat-ryadom`, тип **Public**.
-2. На странице репозитория: **Add file → Upload files**, перетащите все файлы и папку `worker`, нажмите **Commit changes**.
-3. **Settings → Pages**: в Source выберите **Deploy from a branch**, ветка `main`, папка `/ (root)`, **Save**.
-4. Через 1–2 минуты сайт откроется по адресу `https://ВАШ-ЛОГИН.github.io/pamyat-ryadom/`.
+- **nginx** раздаёт сайт из `/var/www/graveangels`, сертификат https — Let's Encrypt, продлевается сам.
+- **Заказы с формы** идут на `/api/order` → сервис `graveangels-orders` (`/opt/graveangels/orders.py`) → Telegram-бот.
+  Токен бота и CHAT_ID лежат только на сервере: `/etc/graveangels/orders.env`.
+- Outline VPN на том же сервере работает в Docker отдельно, сайт его не трогает.
 
-Пока не сделан шаг 2 ниже, форма заказа открывает WhatsApp (+7 977 390-11-55) с уже заполненным текстом заказа — заявки не потеряются.
+## Обновить сайт после изменений на GitHub
 
-## 2. Подключить заказы в Telegram (@Andrymorbot)
+Зайти на сервер и выполнить:
 
-### Токен и ID чата
+```
+bash /opt/graveangels/update.sh
+```
 
-1. В Telegram откройте **@BotFather** → `/mybots` → выберите **@Andrymorbot** → **API Token**. Скопируйте токен. Никому его не показывайте и не вставляйте в `index.html`.
-2. Напишите своему боту любое сообщение, например `/start`.
-3. Откройте в браузере `https://api.telegram.org/botТОКЕН/getUpdates` (вместо `ТОКЕН` — ваш токен). Найдите `"chat":{"id":123456789` — это число и есть **CHAT_ID**.
+Скрипт скачает свежую версию из ветки `main` и сам подставит адрес для заказов в `index.html` (на GitHub `ORDER_ENDPOINT` остаётся пустым — это нормально).
 
-### Посредник на Cloudflare (бесплатно)
+## Установить на новый сервер (Ubuntu 22.04+)
 
-1. Зарегистрируйтесь на dash.cloudflare.com.
-2. **Workers & Pages → Create → Create Worker**, назовите `orders`, нажмите **Deploy**.
-3. **Edit code**: удалите всё, вставьте содержимое `worker/telegram-worker.js`, нажмите **Deploy**.
-4. **Settings → Variables and Secrets → Add**:
-   - `BOT_TOKEN` — токен, тип **Secret**;
-   - `CHAT_ID` — число из шага выше;
-   - `ALLOWED_ORIGIN` — `https://ВАШ-ЛОГИН.github.io` (без слеша и папки в конце).
-5. Скопируйте адрес воркера вида `https://orders.ВАШ-АККАУНТ.workers.dev`.
+```
+curl -fsSLO https://raw.githubusercontent.com/andreym79/kladbishe/main/deploy/install.sh && bash install.sh
+```
 
-### Связать сайт с посредником
+Скрипт спросит токен бота от @BotFather и попросит написать боту `/start`. Перед запуском домен `graveangels.ru` **и** `www.graveangels.ru` должны указывать на IP сервера (DNS в панели Beget). Повторный запуск безопасен.
 
-1. В репозитории откройте `index.html` → значок карандаша.
-2. Найдите строку `var ORDER_ENDPOINT = '';` и вставьте адрес воркера между кавычками:
-   `var ORDER_ENDPOINT = 'https://orders.ВАШ-АККАУНТ.workers.dev';`
-3. **Commit changes**. Через минуту отправьте тестовый заказ — он придёт в бота.
+## Если что-то не работает
 
-## Что заменить перед запуском
-
-- Серые блоки с подписями в квадратных скобках — фото основателя, видеообращение, фото «до/после».
-- Тексты в квадратных скобках — имя основателя и его история.
+- Сервис заказов: `systemctl status graveangels-orders`, журнал — `journalctl -u graveangels-orders`.
+- Сертификат: `certbot certificates`.
+- Если форма не может отправить заказ, посетитель видит просьбу написать в WhatsApp (+7 977 390-11-55) — заявки не теряются.
