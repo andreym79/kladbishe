@@ -45,9 +45,9 @@ if grep -qs '^CRM_FORM_URL=' "$ETC/orders.env"; then
   echo "Заказы уже идут в CRM."
 else
   echo
-  echo "В CRM: Настройки → Заявки с сайта → создайте форму → «Подключить»: там есть ключ формы (32 символа)."
-  read -rp "Ключ формы (пусто — заказы только в Telegram): " FORM_KEY
-  FORM_KEY=$(printf '%s' "$FORM_KEY" | tr -d '[:space:]')
+  echo "В CRM: Настройки → Заявки с сайта → создайте форму → «Подключить» → скопируйте «Ссылку на форму»."
+  read -rp "Ссылка на форму или её ключ (пусто — заказы только в Telegram): " FORM_KEY
+  FORM_KEY=$(printf '%s' "$FORM_KEY" | grep -oE '[a-f0-9]{32}' | tail -1 || true)
   if [ -n "$FORM_KEY" ]; then
     curl -fsS -o /dev/null --max-time 15 "$CRM_API/public/forms/$FORM_KEY" || fail "CRM не нашла форму с таким ключом"
     (umask 077; printf 'CRM_FORM_URL=%s/public/forms/%s\n' "$CRM_API" "$FORM_KEY" >> "$ETC/orders.env")
