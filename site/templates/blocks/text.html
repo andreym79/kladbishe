@@ -1,0 +1,9 @@
+{%- set b = block.data -%}
+<section class="sec {{ 'dark' if b.dark else 'light' }}">
+<div style="max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+{% if b.eyebrow %}{{ m.eyebrow(b.eyebrow) }}
+{% endif %}{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}{% if b.text %}<p style="margin: 0; color: {{ '#CFCAC0' if b.dark else '#5C5850' }}">{{ b.text | nl2br }}</p>
+{% endif %}{% if b.photo %}{{ m.picture(b.photo, alt=b.photo_alt or '', sizes='(min-width: 960px) 880px, calc(100vw - 40px)', style='display: block; width: 100%; height: auto; border-radius: 6px') }}
+{% endif %}</div>
+</section>

@@ -1,0 +1,21 @@
+{%- set b = block.data -%}
+<section class="sec dark hero">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(40px, 6vw, 88px); align-items: center">
+<div style="display: flex; flex-direction: column; gap: 28px">
+{% if b.eyebrow %}{{ m.eyebrow(b.eyebrow) }}
+{% endif %}<h1 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(42px, 5.4vw, 74px); line-height: 1.04; letter-spacing: -0.01em">{{ b.title | nl2br }}</h1>
+{% if b.subtitle %}<p style="margin: 0; font-size: clamp(18px, 1.6vw, 21px); color: #CFCAC0; max-width: 560px">{{ b.subtitle | nl2br }}</p>
+{% endif %}<div style="display: flex; gap: 14px; flex-wrap: wrap">
+{% if b.whatsapp_button %}{{ m.wa_button(b.whatsapp_button, s.whatsapp_url) }}
+{% endif %}{% if b.telegram_button and s.telegram_url %}{{ m.tg_button(b.telegram_button, s.telegram_url) }}
+{% endif %}</div>
+{% if b.note %}<div style="font-size: 15px; color: #B5B0A6">{{ b.note }}</div>
+{% endif %}</div>
+{% if b.photo %}<div style="display: flex; flex-direction: column; gap: 14px">
+{{ m.picture(b.photo, alt=b.photo_alt or '', sizes='(min-width: 1340px) 560px, (min-width: 820px) 45vw, calc(100vw - 40px)', width=720, height=900, eager=True, style='display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px') }}
+</div>
+{% endif %}</div>
+{% if b.features %}<div style="max-width: 1200px; margin: clamp(32px, 4vw, 56px) auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px; border-top: 1px solid rgba(244,241,235,0.14); padding-top: 32px">
+{% for f in b.features %}<div style="display: flex; flex-direction: column; gap: 4px"><div style="font-weight: 600">{{ f.title }}</div>{% if f.text %}<div style="font-size: 15px; color: #B5B0A6">{{ f.text }}</div>{% endif %}</div>
+{% endfor %}</div>
+{% endif %}</section>

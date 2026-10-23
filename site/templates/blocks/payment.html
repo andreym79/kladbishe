@@ -1,0 +1,14 @@
+{%- set b = block.data -%}
+<section class="sec light">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 88px)">
+<div style="display: flex; flex-direction: column; gap: 24px">
+{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}{% set cur = (b.currencies or '').split() %}{% if cur %}<div style="display: flex; gap: 12px; flex-wrap: wrap">
+{% for c in cur %}<div style="min-width: 72px; height: 72px; padding: 0 18px; border-radius: 999px; {% if loop.first %}background: #141414; color: #F4F1EB{% else %}border: 1px solid #1F1F1F{% endif %}; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 34px">{{ c }}</div>
+{% endfor %}</div>
+{% endif %}</div>
+<div style="display: flex; flex-direction: column">
+{% for it in b['items'] or [] %}<div style="padding: 20px 0; border-bottom: 1px solid #E3DED4"><div style="font-weight: 700">{{ it.title }}</div>{% if it.text %}<div style="color: #5C5850">{{ it.text }}</div>{% endif %}</div>
+{% endfor %}</div>
+</div>
+</section>

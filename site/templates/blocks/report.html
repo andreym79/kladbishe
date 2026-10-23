@@ -1,0 +1,26 @@
+{%- set b = block.data -%}
+<section class="sec dark">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(40px, 6vw, 88px); align-items: center">
+<div style="display: flex; flex-direction: column; gap: 24px; max-width: 520px">
+{% if b.eyebrow %}{{ m.eyebrow(b.eyebrow) }}
+{% endif %}{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}{% if b.text %}<p style="margin: 0; color: #CFCAC0">{{ b.text | nl2br }}</p>
+{% endif %}</div>
+<div style="background: #1E1F1C; border: 1px solid rgba(244,241,235,0.10); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px; max-width: 460px; width: 100%; justify-self: center">
+<div style="display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(244,241,235,0.10)">
+<div style="width: 40px; height: 40px; border-radius: 999px; background: #0038B8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700">{{ (s.brand or 'Х')[:1] }}</div>
+<div style="display: flex; flex-direction: column"><div style="font-weight: 600; font-size: 16px">{{ s.brand }}</div>{% if b.card_subtitle %}<div style="font-size: 13px; color: #B5B0A6">{{ b.card_subtitle }}</div>{% endif %}</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+{% for ph, label, bg, fg in [(b.before_photo, b.before_label, '#3A3A38', '#D8D4CB'), (b.after_photo, b.after_label, '#4E5A44', '#F4F1EB')] %}
+{%- set im = image(ph) -%}
+<div style="aspect-ratio: 3 / 4; border-radius: 10px; background: {{ bg }}{% if im %} url('{{ im.src }}') center / cover no-repeat{% endif %}; display: flex; align-items: flex-end; padding: 10px; font-size: 13px; color: {{ fg }}{% if im %}; text-shadow: 0 1px 3px rgba(0,0,0,0.7){% endif %}">{{ label or '' }}</div>
+{% endfor %}
+</div>
+{% if b.message %}<div style="background: #2A2B27; border-radius: 12px; padding: 12px 14px; font-size: 15px; line-height: 1.5">{{ b.message | nl2br }}{% if b.message_meta %}<div style="font-size: 12px; color: #B5B0A6; margin-top: 6px">{{ b.message_meta }}</div>{% endif %}</div>
+{% endif %}{% if b.video_label %}<div style="background: #2A2B27; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; font-size: 15px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F4F1EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m10 8 6 4-6 4z"></path></svg>
+{{ b.video_label }}</div>
+{% endif %}</div>
+</div>
+</section>

@@ -1,0 +1,8 @@
+{%- set b = block.data -%}
+<footer style="background: #141414; color: #B5B0A6; padding: 40px clamp(20px, 5vw, 80px); border-top: 1px solid rgba(244,241,235,0.12); font-size: 15px">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; color: #F4F1EB">{{ s.brand }}</div>{% if b.tagline %}<div>{{ b.tagline }}</div>{% endif %}</div>
+<div style="display: flex; flex-direction: column; gap: 6px">{% if s.phone %}<a href="{{ s.phone_url }}" style="color: #F4F1EB; text-decoration: none">{{ s.phone }}</a>{% endif %}<div><a href="{{ s.whatsapp_url }}" style="color: #B5B0A6">WhatsApp</a>{% if s.telegram_url %} · <a href="{{ s.telegram_url }}" style="color: #B5B0A6">Telegram</a>{% endif %}</div></div>
+{% if b.hours %}<div style="display: flex; flex-direction: column; gap: 6px"><div style="color: #F4F1EB">{{ b.hours }}</div>{% if b.hours_note %}<div>{{ b.hours_note }}</div>{% endif %}</div>
+{% endif %}</div>
+</footer>

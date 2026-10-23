@@ -1,0 +1,13 @@
+{%- set b = block.data -%}
+<section id="how" class="sec light">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 40px">
+{% for st in b.steps or [] %}<div style="display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #1F1F1F; padding-top: 24px">
+<div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 48px; line-height: 1">{{ '%02d' % loop.index }}</div>
+<div style="font-weight: 700; font-size: 20px">{{ st.title }}</div>
+{% if st.text %}<div style="color: #5C5850">{{ st.text | nl2br }}</div>
+{% endif %}</div>
+{% endfor %}</div>
+</div>
+</section>

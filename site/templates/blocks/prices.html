@@ -1,0 +1,21 @@
+{%- set b = block.data -%}
+<section id="prices" class="sec light">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+{% if b.title %}{{ m.h2(b.title) }}
+{% endif %}{% if b.subtitle %}<p style="margin: 0; color: #5C5850">{{ b.subtitle | nl2br }}</p>
+{% endif %}</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 24px; align-items: stretch">
+{% for t in tariffs %}{% set dark = t.dark %}
+<div style="{% if dark %}background: #141414; color: #F4F1EB{% else %}background: #FBFAF7; border: 1px solid #E3DED4{% endif %}; border-radius: 8px; padding: 36px; display: flex; flex-direction: column; gap: 20px">
+{% if t.badge %}<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><div style="font-weight: 700; font-size: 20px">{{ t.name }}</div>{% if t.badge_style == 'Золотая' %}<div style="font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: #C9A86A; color: #141414">{{ t.badge }}</div>{% else %}<div style="font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 999px; border: 1px solid {% if dark %}rgba(244,241,235,0.35){% else %}#A39E93{% endif %}">{{ t.badge }}</div>{% endif %}</div>
+{% else %}<div style="font-weight: 700; font-size: 20px">{{ t.name }}</div>
+{% endif %}<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap"><span style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 56px; line-height: 1">{{ t.price_text }}</span>{% if t.old_price_text %}<span style="color: {% if dark %}#B5B0A6{% else %}#5C5850{% endif %}; font-size: 15px; text-decoration: line-through">{{ t.old_price_text }}</span>{% endif %}</div>
+<div style="color: {% if dark %}#CFCAC0{% else %}#5C5850{% endif %}; flex-grow: 1">{{ (t.description or '') | nl2br }}</div>
+{% if dark %}<button type="button" data-order="{{ t.key }}" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 999px; border: none; background: #0038B8; color: #FFFFFF; font-family: inherit; font-size: 18px; font-weight: 700; cursor: pointer">{{ t.button or 'Заказать' }}</button>
+{% else %}<button type="button" data-order="{{ t.key }}" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 999px; border: 1px solid #1F1F1F; background: transparent; color: #1F1F1F; font-family: inherit; font-size: 18px; font-weight: 600; cursor: pointer">{{ t.button or 'Заказать' }}</button>
+{% endif %}</div>
+{% endfor %}
+</div>
+</div>
+</section>

@@ -1,0 +1,1112 @@
+{
+ "blocks": [
+  {
+   "type": "settings",
+   "label": "Контакты и SEO",
+   "max": 1,
+   "help": "Не показывается отдельным блоком: номера и название используются во всех кнопках, шапке и подвале.",
+   "fields": [
+    {
+     "key": "brand",
+     "label": "Название",
+     "type": "text",
+     "required": true,
+     "max": 60
+    },
+    {
+     "key": "whatsapp",
+     "label": "Номер WhatsApp",
+     "type": "text",
+     "required": true,
+     "max": 20,
+     "help": "Только цифры, с кодом страны: 79773901155"
+    },
+    {
+     "key": "telegram",
+     "label": "Telegram",
+     "type": "text",
+     "max": 40,
+     "help": "Имя без @, например Liza_Vesta. Пусто — кнопки Telegram не будет"
+    },
+    {
+     "key": "phone",
+     "label": "Телефон на сайте",
+     "type": "text",
+     "max": 40,
+     "help": "Как показывать: (053) 330-1649"
+    },
+    {
+     "key": "phone_link",
+     "label": "Телефон для звонка",
+     "type": "text",
+     "max": 20,
+     "help": "С кодом страны: +972533301649"
+    },
+    {
+     "key": "seo_title",
+     "label": "Заголовок вкладки и поиска",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "seo_description",
+     "label": "Описание для поиска",
+     "type": "textarea",
+     "max": 300
+    },
+    {
+     "key": "og_title",
+     "label": "Заголовок при отправке ссылки",
+     "type": "text",
+     "max": 120,
+     "help": "Пусто — как заголовок вкладки"
+    },
+    {
+     "key": "og_description",
+     "label": "Описание при отправке ссылки",
+     "type": "textarea",
+     "max": 300
+    }
+   ],
+   "pin": "top"
+  },
+  {
+   "type": "header",
+   "label": "Шапка",
+   "max": 1,
+   "fields": [
+    {
+     "key": "nav",
+     "label": "Меню",
+     "type": "list",
+     "fields": [
+      {
+       "key": "label",
+       "label": "Пункт",
+       "type": "text",
+       "required": true,
+       "max": 40
+      },
+      {
+       "key": "link",
+       "label": "Ссылка",
+       "type": "url",
+       "required": true,
+       "help": "#how, #prices, #traditions, #faq, #reviews или адрес"
+      }
+     ],
+     "itemLabel": "Пункт",
+     "maxItems": 6
+    },
+    {
+     "key": "button",
+     "label": "Кнопка WhatsApp",
+     "type": "text",
+     "max": 40
+    }
+   ],
+   "pin": "top"
+  },
+  {
+   "type": "hero",
+   "label": "Первый экран",
+   "max": 1,
+   "fields": [
+    {
+     "key": "eyebrow",
+     "label": "Надпись над заголовком",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "required": true,
+     "max": 200
+    },
+    {
+     "key": "subtitle",
+     "label": "Подзаголовок",
+     "type": "textarea",
+     "max": 400
+    },
+    {
+     "key": "whatsapp_button",
+     "label": "Кнопка WhatsApp",
+     "type": "text",
+     "max": 40
+    },
+    {
+     "key": "telegram_button",
+     "label": "Кнопка Telegram",
+     "type": "text",
+     "max": 40
+    },
+    {
+     "key": "note",
+     "label": "Строка под кнопками",
+     "type": "text",
+     "max": 160
+    },
+    {
+     "key": "photo",
+     "label": "Фото",
+     "type": "image",
+     "help": "Вертикальное, обрезается до 4 : 5"
+    },
+    {
+     "key": "photo_alt",
+     "label": "Описание фото для незрячих",
+     "type": "text",
+     "max": 160
+    },
+    {
+     "key": "features",
+     "label": "Преимущества под экраном",
+     "type": "list",
+     "fields": [
+      {
+       "key": "title",
+       "label": "Заголовок",
+       "type": "text",
+       "required": true,
+       "max": 60
+      },
+      {
+       "key": "text",
+       "label": "Пояснение",
+       "type": "text",
+       "max": 120
+      }
+     ],
+     "itemLabel": "Преимущество",
+     "maxItems": 6
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "label": "Цитата основателя",
+   "fields": [
+    {
+     "key": "eyebrow",
+     "label": "Надпись сверху",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "quote",
+     "label": "Цитата",
+     "type": "textarea",
+     "required": true,
+     "max": 600
+    },
+    {
+     "key": "signature",
+     "label": "Подпись",
+     "type": "text",
+     "max": 120
+    }
+   ]
+  },
+  {
+   "type": "steps",
+   "label": "Как это работает",
+   "max": 1,
+   "help": "Меню ведёт сюда по ссылке #how",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "steps",
+     "label": "Шаги",
+     "type": "list",
+     "fields": [
+      {
+       "key": "title",
+       "label": "Шаг",
+       "type": "text",
+       "required": true,
+       "max": 80
+      },
+      {
+       "key": "text",
+       "label": "Пояснение",
+       "type": "textarea",
+       "max": 300
+      }
+     ],
+     "itemLabel": "Шаг",
+     "maxItems": 6
+    }
+   ]
+  },
+  {
+   "type": "prices",
+   "label": "Цены",
+   "max": 1,
+   "help": "Тарифы отсюда же показываются в форме заказа. Меню ведёт сюда по ссылке #prices",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "subtitle",
+     "label": "Подзаголовок",
+     "type": "textarea",
+     "max": 300
+    },
+    {
+     "key": "currency",
+     "label": "Валюта",
+     "type": "text",
+     "max": 5,
+     "help": "Знак после цены"
+    },
+    {
+     "key": "tariffs",
+     "label": "Тарифы",
+     "type": "list",
+     "fields": [
+      {
+       "key": "name",
+       "label": "Название",
+       "type": "text",
+       "required": true,
+       "max": 60
+      },
+      {
+       "key": "price",
+       "label": "Цена",
+       "type": "number",
+       "required": true,
+       "min": 0
+      },
+      {
+       "key": "old_price",
+       "label": "Старая цена (зачёркнутая)",
+       "type": "number",
+       "min": 0
+      },
+      {
+       "key": "description",
+       "label": "Что входит",
+       "type": "textarea",
+       "max": 300
+      },
+      {
+       "key": "badge",
+       "label": "Плашка",
+       "type": "text",
+       "max": 40,
+       "help": "Например: Выбирают чаще всего"
+      },
+      {
+       "key": "badge_style",
+       "label": "Вид плашки",
+       "type": "select",
+       "options": [
+        "Рамка",
+        "Золотая"
+       ]
+      },
+      {
+       "key": "dark",
+       "label": "Выделить тёмной карточкой",
+       "type": "boolean"
+      },
+      {
+       "key": "button",
+       "label": "Текст кнопки",
+       "type": "text",
+       "max": 40,
+       "help": "Пусто — «Заказать»"
+      }
+     ],
+     "itemLabel": "Тариф",
+     "maxItems": 6,
+     "required": true
+    }
+   ]
+  },
+  {
+   "type": "checklist",
+   "label": "Список с галочками",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "items",
+     "label": "Пункты",
+     "type": "list",
+     "fields": [
+      {
+       "key": "text",
+       "label": "Пункт",
+       "type": "text",
+       "required": true,
+       "max": 200
+      }
+     ],
+     "itemLabel": "Пункт",
+     "maxItems": 20
+    }
+   ]
+  },
+  {
+   "type": "report",
+   "label": "Пример отчёта",
+   "fields": [
+    {
+     "key": "eyebrow",
+     "label": "Надпись сверху",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "max": 160
+    },
+    {
+     "key": "text",
+     "label": "Текст",
+     "type": "textarea",
+     "max": 600
+    },
+    {
+     "key": "card_subtitle",
+     "label": "Подпись в карточке",
+     "type": "text",
+     "max": 80
+    },
+    {
+     "key": "before_photo",
+     "label": "Фото «до»",
+     "type": "image",
+     "help": "Пусто — серый прямоугольник"
+    },
+    {
+     "key": "before_label",
+     "label": "Подпись «до»",
+     "type": "text",
+     "max": 40
+    },
+    {
+     "key": "after_photo",
+     "label": "Фото «после»",
+     "type": "image"
+    },
+    {
+     "key": "after_label",
+     "label": "Подпись «после»",
+     "type": "text",
+     "max": 40
+    },
+    {
+     "key": "message",
+     "label": "Сообщение в отчёте",
+     "type": "textarea",
+     "max": 300
+    },
+    {
+     "key": "message_meta",
+     "label": "Дата и геометка",
+     "type": "text",
+     "max": 80
+    },
+    {
+     "key": "video_label",
+     "label": "Строка про видео",
+     "type": "text",
+     "max": 80
+    }
+   ]
+  },
+  {
+   "type": "payment",
+   "label": "Оплата",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "max": 160
+    },
+    {
+     "key": "currencies",
+     "label": "Валюты",
+     "type": "text",
+     "max": 20,
+     "help": "Через пробел: ₪ $ €"
+    },
+    {
+     "key": "items",
+     "label": "Пункты",
+     "type": "list",
+     "fields": [
+      {
+       "key": "title",
+       "label": "Заголовок",
+       "type": "text",
+       "required": true,
+       "max": 80
+      },
+      {
+       "key": "text",
+       "label": "Пояснение",
+       "type": "text",
+       "max": 200
+      }
+     ],
+     "itemLabel": "Пункт",
+     "maxItems": 8
+    }
+   ]
+  },
+  {
+   "type": "traditions",
+   "label": "Традиции",
+   "max": 1,
+   "help": "Меню ведёт сюда по ссылке #traditions",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "max": 160
+    },
+    {
+     "key": "text",
+     "label": "Текст",
+     "type": "textarea",
+     "max": 400
+    },
+    {
+     "key": "groups",
+     "label": "Колонки",
+     "type": "list",
+     "fields": [
+      {
+       "key": "title",
+       "label": "Заголовок колонки",
+       "type": "text",
+       "required": true,
+       "max": 80
+      },
+      {
+       "key": "items",
+       "label": "Строки",
+       "type": "list",
+       "fields": [
+        {
+         "key": "text",
+         "label": "Строка",
+         "type": "text",
+         "required": true,
+         "max": 160
+        }
+       ],
+       "itemLabel": "Строка",
+       "maxItems": 12
+      }
+     ],
+     "itemLabel": "Колонка",
+     "maxItems": 4
+    }
+   ]
+  },
+  {
+   "type": "guarantee",
+   "label": "Гарантия",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "required": true,
+     "max": 200
+    },
+    {
+     "key": "text",
+     "label": "Текст",
+     "type": "textarea",
+     "max": 400
+    }
+   ]
+  },
+  {
+   "type": "extras",
+   "label": "Доп. услуги и памятные даты",
+   "help": "Кнопка «Сообщить даты» открывает форму заказа с первым тарифом",
+   "fields": [
+    {
+     "key": "services_title",
+     "label": "Заголовок доп. услуг",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "services",
+     "label": "Доп. услуги",
+     "type": "list",
+     "fields": [
+      {
+       "key": "text",
+       "label": "Услуга",
+       "type": "text",
+       "required": true,
+       "max": 120
+      }
+     ],
+     "itemLabel": "Услуга",
+     "maxItems": 12
+    },
+    {
+     "key": "services_note",
+     "label": "Строка под услугами",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "dates_title",
+     "label": "Заголовок про памятные даты",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "dates_text",
+     "label": "Текст про памятные даты",
+     "type": "textarea",
+     "max": 400
+    },
+    {
+     "key": "dates_button",
+     "label": "Кнопка",
+     "type": "text",
+     "max": 40
+    }
+   ]
+  },
+  {
+   "type": "reviews",
+   "label": "Отзывы",
+   "max": 1,
+   "help": "Можно поставить в меню ссылкой #reviews",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "items",
+     "label": "Отзывы",
+     "type": "list",
+     "fields": [
+      {
+       "key": "name",
+       "label": "Имя",
+       "type": "text",
+       "required": true,
+       "max": 80
+      },
+      {
+       "key": "place",
+       "label": "Город или кладбище",
+       "type": "text",
+       "max": 80
+      },
+      {
+       "key": "text",
+       "label": "Отзыв",
+       "type": "textarea",
+       "required": true,
+       "max": 800
+      },
+      {
+       "key": "photo",
+       "label": "Фото (по желанию)",
+       "type": "image"
+      }
+     ],
+     "itemLabel": "Отзыв",
+     "maxItems": 12
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "label": "Частые вопросы",
+   "max": 1,
+   "help": "Меню ведёт сюда по ссылке #faq",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "items",
+     "label": "Вопросы",
+     "type": "list",
+     "fields": [
+      {
+       "key": "question",
+       "label": "Вопрос",
+       "type": "text",
+       "required": true,
+       "max": 200
+      },
+      {
+       "key": "answer",
+       "label": "Ответ",
+       "type": "textarea",
+       "required": true,
+       "max": 1500
+      }
+     ],
+     "itemLabel": "Вопрос",
+     "maxItems": 30
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "label": "Текст с фото",
+   "help": "Свободный блок: заголовок, текст и фото",
+   "fields": [
+    {
+     "key": "eyebrow",
+     "label": "Надпись сверху",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "max": 200
+    },
+    {
+     "key": "text",
+     "label": "Текст",
+     "type": "textarea",
+     "max": 3000
+    },
+    {
+     "key": "photo",
+     "label": "Фото",
+     "type": "image"
+    },
+    {
+     "key": "photo_alt",
+     "label": "Описание фото",
+     "type": "text",
+     "max": 160
+    },
+    {
+     "key": "dark",
+     "label": "Тёмный фон",
+     "type": "boolean"
+    }
+   ]
+  },
+  {
+   "type": "contact",
+   "label": "Финальный экран",
+   "max": 1,
+   "fields": [
+    {
+     "key": "title",
+     "label": "Заголовок",
+     "type": "textarea",
+     "required": true,
+     "max": 200
+    },
+    {
+     "key": "text",
+     "label": "Текст",
+     "type": "textarea",
+     "max": 300
+    },
+    {
+     "key": "whatsapp_button",
+     "label": "Кнопка WhatsApp",
+     "type": "text",
+     "max": 40
+    },
+    {
+     "key": "telegram_button",
+     "label": "Кнопка Telegram",
+     "type": "text",
+     "max": 40
+    }
+   ]
+  },
+  {
+   "type": "footer",
+   "label": "Подвал",
+   "max": 1,
+   "fields": [
+    {
+     "key": "tagline",
+     "label": "Строка под названием",
+     "type": "text",
+     "max": 120
+    },
+    {
+     "key": "hours",
+     "label": "Часы работы",
+     "type": "text",
+     "max": 80
+    },
+    {
+     "key": "hours_note",
+     "label": "Пояснение к часам",
+     "type": "text",
+     "max": 80
+    }
+   ],
+   "pin": "bottom"
+  }
+ ],
+ "initial": {
+  "blocks": [
+   {
+    "type": "settings",
+    "data": {
+     "brand": "Хранители памяти",
+     "whatsapp": "79773901155",
+     "telegram": "Liza_Vesta",
+     "phone": "(053) 330-1649",
+     "phone_link": "+972533301649",
+     "seo_title": "Хранители памяти — уход за могилами в Москве для семей в Израиле",
+     "seo_description": "Уход за могилами близких в Москве и Подмосковье. Фото- и видеоотчёт в WhatsApp. Оплата в шекелях, долларах или евро.",
+     "og_title": "Уход за могилами в Москве — для семей в Израиле",
+     "og_description": "Уборка, мойка памятника, цветы или камни по традиции. Фотоотчёт в WhatsApp. Оплата в шекелях."
+    }
+   },
+   {
+    "type": "header",
+    "data": {
+     "nav": [
+      {
+       "label": "Как работаем",
+       "link": "#how"
+      },
+      {
+       "label": "Цены",
+       "link": "#prices"
+      },
+      {
+       "label": "Традиции",
+       "link": "#traditions"
+      },
+      {
+       "label": "Вопросы",
+       "link": "#faq"
+      }
+     ],
+     "button": "Написать в WhatsApp"
+    }
+   },
+   {
+    "type": "hero",
+    "data": {
+     "eyebrow": "Москва и Подмосковье · для семей в Израиле",
+     "title": "Ухаживаем за могилами близких в Москве - вы видите каждый шаг из Израиля",
+     "subtitle": "Уборка, мойка памятника, цветы или камни по традиции. Фото и видео в WhatsApp. Оплата в шекелях.",
+     "whatsapp_button": "Написать в WhatsApp",
+     "telegram_button": "Telegram",
+     "note": "Ответим в течение 15 минут, 9:00–21:00 по израильскому времени",
+     "photo": "images/founder.webp",
+     "photo_alt": "Основатель «Хранителей памяти» на кладбище",
+     "features": [
+      {
+       "title": "Фотоотчёт «до/после»",
+       "text": "С датой и геометкой, в WhatsApp"
+      },
+      {
+       "title": "Оплата в ₪, $ или €",
+       "text": "Картой вашего банка, без пересчёта"
+      },
+      {
+       "title": "Гарантия результата",
+       "text": "Переделаем или вернём деньги"
+      }
+     ]
+    }
+   },
+   {
+    "type": "quote",
+    "data": {
+     "eyebrow": "Кто будет приезжать к вашим близким",
+     "quote": "«Меня зовут Елизавета Боруховская. Я лично отвечаю за каждую могилу, к которой мы приезжаем, — и показываю вам всё, что сделано»."
+    }
+   },
+   {
+    "type": "steps",
+    "data": {
+     "title": "Три шага — и вы спокойны",
+     "steps": [
+      {
+       "title": "Напишите нам",
+       "text": "Кладбище, ФИО и даты. Если помните участок и ряд или есть старое фото — пришлите."
+      },
+      {
+       "title": "Оплатите в шекелях",
+       "text": "Картой израильского банка. Цена фиксированная, без пересчёта курса."
+      },
+      {
+       "title": "Получите отчёт",
+       "text": "Через 3–5 дней — фото «до» и «после» и видео с места в WhatsApp."
+      }
+     ]
+    }
+   },
+   {
+    "type": "prices",
+    "data": {
+     "title": "Цены в шекелях",
+     "subtitle": "Москва и ближнее Подмосковье. Цена не меняется вместе с курсом.",
+     "currency": "₪",
+     "tariffs": [
+      {
+       "name": "Разовый уход",
+       "price": 350,
+       "description": "Один визит: уборка, мойка памятника, цветы или камни, фото- и видеоотчёт."
+      },
+      {
+       "name": "Сезон",
+       "price": 890,
+       "old_price": 990,
+       "description": "Три визита: весна, лето, осень. Отчёт после каждого.",
+       "badge": "Выбирают чаще всего",
+       "badge_style": "Рамка",
+       "dark": true
+      },
+      {
+       "name": "Годовой абонемент",
+       "price": 1730,
+       "old_price": 2310,
+       "description": "Пять визитов в год и визит в памятную дату. Напомним заранее.",
+       "badge": "Выгода 25%",
+       "badge_style": "Золотая",
+       "button": "Оформить абонемент"
+      }
+     ]
+    }
+   },
+   {
+    "type": "checklist",
+    "data": {
+     "title": "Что входит в каждый визит",
+     "items": [
+      {
+       "text": "Удаляем траву, поросль и сорняки"
+      },
+      {
+       "text": "Моем памятник и цоколь"
+      },
+      {
+       "text": "Протираем гравировку и фотографию"
+      },
+      {
+       "text": "Вывозим мусор и старые венки"
+      },
+      {
+       "text": "Кладём свежие цветы или камни на памятник — как принято в вашей семье"
+      },
+      {
+       "text": "Присылаем фото «до/после» и видео обхода участка"
+      }
+     ]
+    }
+   },
+   {
+    "type": "report",
+    "data": {
+     "eyebrow": "Отчёт после каждого визита",
+     "title": "Вы видите всё, как будто стоите рядом",
+     "text": "Фото до начала работ и после, видео обхода участка. На каждом снимке — дата, время и геометка. По запросу позвоним по видео прямо с кладбища.",
+     "card_subtitle": "Отчёт · Востряковское кладбище",
+     "before_label": "До · ч/б",
+     "after_label": "После · в цвете",
+     "message": "Работы завершены. Памятник вымыт, камни положены. Видео ниже.",
+     "message_meta": "12 мая · 14:32 · 55.6537, 37.4103",
+     "video_label": "Видео обхода участка · 0:48"
+    }
+   },
+   {
+    "type": "payment",
+    "data": {
+     "title": "Оплата из Израиля — просто, прозрачно и без скрытых комиссий",
+     "currencies": "₪ $ €",
+     "items": [
+      {
+       "title": "Карты израильских банков",
+       "text": "Visa, Mastercard, Isracard"
+      },
+      {
+       "title": "Фиксированная цена",
+       "text": "Вы платите ровно ту сумму, что указана на сайте, без пересчёта курса"
+      },
+      {
+       "title": "Квитанция на почту",
+       "text": "Сразу после оплаты"
+      }
+     ]
+    }
+   },
+   {
+    "type": "traditions",
+    "data": {
+     "title": "С уважением к традициям вашей семьи",
+     "text": "Работаем на всех кладбищах Москвы и ближнего Подмосковья, в том числе на еврейских.",
+     "groups": [
+      {
+       "title": "Еврейские кладбища и участки",
+       "items": [
+        {
+         "text": "Востряковское еврейское"
+        },
+        {
+         "text": "Малаховское — еврейский участок"
+        },
+        {
+         "text": "Салтыковское еврейское"
+        },
+        {
+         "text": "Перловское"
+        }
+       ]
+      },
+      {
+       "title": "Еврейская традиция",
+       "items": [
+        {
+         "text": "Кладём камни вместо цветов"
+        },
+        {
+         "text": "Не работаем в Шаббат и праздники"
+        },
+        {
+         "text": "Посещаем в йом а-зикарон по еврейскому календарю"
+        },
+        {
+         "text": "Принимаем заказы на месяц Элуль"
+        }
+       ]
+      },
+      {
+       "title": "Смешанные семьи",
+       "items": [
+        {
+         "text": "Посещение на Пасху"
+        },
+        {
+         "text": "Цветы и венки по православной традиции"
+        },
+        {
+         "text": "Уход за несколькими могилами одной семьи на разных кладбищах"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "type": "guarantee",
+    "data": {
+     "title": "Не понравился результат на фото — переделаем бесплатно или вернём деньги",
+     "text": "Вы решаете, принимать работу или нет. Без споров и объяснений."
+    }
+   },
+   {
+    "type": "extras",
+    "data": {
+     "services_title": "Если нужно больше, чем уборка",
+     "services": [
+      {
+       "text": "Покраска ограды"
+      },
+      {
+       "text": "Подсыпка крошки"
+      },
+      {
+       "text": "Обработка памятника «Антидождь»"
+      },
+      {
+       "text": "Консервация на зиму"
+      }
+     ],
+     "services_note": "Цена по согласованию",
+     "dates_title": "Памятные даты",
+     "dates_text": "Сообщите даты — годовщину, йорцайт, день рождения. Мы напомним заранее и приедем именно в этот день.",
+     "dates_button": "Сообщить даты"
+    }
+   },
+   {
+    "type": "faq",
+    "data": {
+     "title": "Частые вопросы",
+     "items": [
+      {
+       "question": "Как убедиться, что вы действительно были на месте?",
+       "answer": "На каждом фото — дата, время и геометка. Видео обхода участка показывает памятник и соседние захоронения. По запросу позвоним по видео прямо с кладбища."
+      },
+      {
+       "question": "Что если памятник повреждён?",
+       "answer": "Пришлём фото повреждений и предложим варианты ремонта с ценой. Без вашего согласия ничего не делаем."
+      },
+      {
+       "question": "Не помню точное место захоронения",
+       "answer": "Пришлите ФИО и даты — найдём участок по базе кладбища."
+      },
+      {
+       "question": "Работаете ли вы в Подмосковье?",
+       "answer": "Да, на кладбищах ближнего Подмосковья — Малаховском, Салтыковском, Перловском и других. Для дальних кладбищ стоимость уточним."
+      },
+      {
+       "question": "Можно заказать в подарок родителям?",
+       "answer": "Да. Отчёты можем отправлять сразу нескольким членам семьи."
+      }
+     ]
+    }
+   },
+   {
+    "type": "contact",
+    "data": {
+     "title": "Позаботимся о ваших близких, пока вы далеко",
+     "text": "Напишите кладбище и ФИО — ответим в течение 15 минут.",
+     "whatsapp_button": "Написать в WhatsApp",
+     "telegram_button": "Telegram"
+    }
+   },
+   {
+    "type": "footer",
+    "data": {
+     "tagline": "Уход за могилами в Москве и Подмосковье",
+     "hours": "Вс–Пт, 9:00–21:00",
+     "hours_note": "по израильскому времени"
+    }
+   }
+  ]
+ }
+}

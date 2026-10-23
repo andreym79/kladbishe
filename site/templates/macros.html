@@ -1,0 +1,28 @@
+{#- Shared pieces of the blocks. -#}
+{% macro wa_button(text, url) -%}
+<a href="{{ url }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: #0038B8; color: #FFFFFF; font-weight: 700; font-size: 18px; text-decoration: none">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>
+{{ text }}</a>
+{%- endmacro %}
+
+{% macro tg_button(text, url) -%}
+<a href="{{ url }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 26px; border-radius: 999px; border: 1px solid rgba(244,241,235,0.35); color: #F4F1EB; font-weight: 600; font-size: 18px; text-decoration: none">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F4F1EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg>
+{{ text }}</a>
+{%- endmacro %}
+
+{% macro eyebrow(text) -%}
+<div style="font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: #B5B0A6">{{ text }}</div>
+{%- endmacro %}
+
+{% macro h2(text, size='clamp(36px, 4vw, 56px)') -%}
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: {{ size }}; line-height: 1.1">{{ text | nl2br }}</h2>
+{%- endmacro %}
+
+{#- <img> for an image field: CRM uploads get a srcset of the downloaded sizes. -#}
+{% macro picture(value, alt='', sizes='100vw', style='', width=None, height=None, eager=False) -%}
+{%- set im = image(value, width) -%}
+{%- if im -%}
+<img src="{{ im.src }}"{% if im.srcset %} srcset="{{ im.srcset }}" sizes="{{ sizes }}"{% endif %} alt="{{ alt }}"{% if width or im.width %} width="{{ width or im.width }}" height="{{ height or im.height }}"{% endif %} {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %} style="{{ style }}">
+{%- endif -%}
+{%- endmacro %}

@@ -1,0 +1,10 @@
+{%- set b = block.data -%}
+<header style="background: #141414; color: #F4F1EB; padding: 20px clamp(20px, 5vw, 80px); border-bottom: 1px solid rgba(244,241,235,0.12)">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 600; letter-spacing: 0.02em">{{ s.brand }}</div>
+{% if b.nav %}<nav class="nav-links" style="display: flex; gap: 32px; font-size: 16px">
+{% for l in b.nav %}<a href="{{ l.link }}" style="color: #B5B0A6; text-decoration: none">{{ l.label }}</a>
+{% endfor %}</nav>
+{% endif %}{% if b.button %}<a href="{{ s.whatsapp_url }}" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #0038B8; color: #FFFFFF; font-weight: 600; font-size: 16px; text-decoration: none">{{ b.button }}</a>
+{% endif %}</div>
+</header>

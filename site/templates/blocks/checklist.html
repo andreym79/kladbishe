@@ -1,0 +1,9 @@
+{%- set b = block.data -%}
+<section class="sec light">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(32px, 6vw, 88px)">
+{{ m.h2(b.title or '') }}
+<div style="display: flex; flex-direction: column">
+{% for it in b['items'] or [] %}<div style="display: flex; gap: 16px; align-items: flex-start; padding: 18px 0{% if not loop.last %}; border-bottom: 1px solid #E3DED4{% endif %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3F4A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 3px"><path d="M20 6 9 17l-5-5"></path></svg><div>{{ it.text }}</div></div>
+{% endfor %}</div>
+</div>
+</section>

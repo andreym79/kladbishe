@@ -16,7 +16,7 @@ fail() { printf '\n\033[1;31mОШИБКА: %s\033[0m\n' "$*"; exit 1; }
 say "1/6 Ставлю nginx, certbot и git (1-2 минуты)"
 export DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=l NEEDRESTART_SUSPEND=1
 apt-get -o DPkg::Lock::Timeout=300 update -q >/dev/null
-apt-get -o DPkg::Lock::Timeout=300 install -y -q nginx certbot python3-certbot-nginx git rsync curl python3 >/dev/null
+apt-get -o DPkg::Lock::Timeout=300 install -y -q nginx certbot python3-certbot-nginx git rsync curl python3 python3-jinja2 >/dev/null
 echo "Установлено."
 
 setup_telegram() {
@@ -82,126 +82,15 @@ else
 fi
 
 say "3/6 Скачиваю сайт с GitHub"
-mkdir -p "$APP"
-cat > "$APP/update.sh" <<'UPDEOF'
-# Обновить сайт с GitHub: bash /opt/graveangels/update.sh
-set -euo pipefail
-APP=/opt/graveangels
-WEB=/var/www/graveangels
 if [ -d "$APP/repo/.git" ]; then
-  git -C "$APP/repo" fetch -q --depth 1 origin main
-  git -C "$APP/repo" reset -q --hard origin/main
+  git -C "$APP/repo" fetch -q --depth 1 origin main && git -C "$APP/repo" reset -q --hard origin/main
 else
   git clone -q --depth 1 https://github.com/andreym79/kladbishe.git "$APP/repo"
 fi
-mkdir -p "$WEB"
-rsync -a --delete --chmod=D755,F644 --exclude .git --exclude worker --exclude README.md --exclude .nojekyll --exclude deploy --exclude '*.sh' "$APP/repo/" "$WEB/"
-# Если Telegram настроен, форма отправляет заказы на наш сервер
-if [ -f /etc/graveangels/orders.env ]; then
-  sed -i "s|var ORDER_ENDPOINT = '[^']*';|var ORDER_ENDPOINT = '/api/order';|" "$WEB/index.html"
-fi
-echo "Сайт обновлён: $(git -C "$APP/repo" log -1 --format='%h %s')"
-UPDEOF
-bash "$APP/update.sh"
+mkdir -p /var/www/graveangels
+echo "Готово."
 
-say "4/6 Сервис пересылки заказов"
-cat > "$APP/orders.py" <<'PYEOF'
-# Принимает заказ с сайта и пересылает его в Telegram (замена Cloudflare Worker).
-import json, os, urllib.parse, urllib.request
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-
-TOKEN = os.environ["BOT_TOKEN"]
-CHAT_ID = os.environ["CHAT_ID"]
-ALLOWED = {s + "://" + h for s in ("https", "http") for h in ("graveangels.ru", "www.graveangels.ru")}
-
-
-def clean(v, n):
-    return str(v or "").strip()[:n]
-
-
-class Handler(BaseHTTPRequestHandler):
-    def reply(self, code, text):
-        body = text.encode()
-        self.send_response(code)
-        self.send_header("Content-Type", "text/plain; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
-
-    def do_POST(self):
-        origin = self.headers.get("Origin", "")
-        if origin and origin not in ALLOWED:
-            return self.reply(403, "Forbidden")
-        try:
-            size = min(int(self.headers.get("Content-Length") or 0), 20000)
-            o = json.loads(self.rfile.read(size) or b"{}")
-            if not isinstance(o, dict):
-                raise ValueError
-        except Exception:
-            return self.reply(400, "Bad request")
-
-        # Ловушка для спам-ботов: скрытое поле должно быть пустым
-        if o.get("website"):
-            return self.reply(200, "OK")
-
-        name, phone, cemetery = clean(o.get("name"), 120), clean(o.get("phone"), 40), clean(o.get("cemetery"), 200)
-        if not (name and phone and cemetery):
-            return self.reply(400, "Missing fields")
-
-        lines = ["🕯 Новый заказ с сайта", "", "Имя: " + name, "Телефон: " + phone, "Кладбище: " + cemetery]
-        if o.get("grave"):
-            lines.append("Имя на могиле: " + clean(o.get("grave"), 200))
-        lines.append("Тариф: " + clean(o.get("tariff"), 80))
-        if o.get("info"):
-            lines.append("Дополнительно: " + clean(o.get("info"), 1500))
-
-        data = urllib.parse.urlencode({"chat_id": CHAT_ID, "text": "\n".join(lines)}).encode()
-        try:
-            urllib.request.urlopen("https://api.telegram.org/bot" + TOKEN + "/sendMessage", data, timeout=15)
-        except Exception as e:
-            print("telegram error:", e, flush=True)
-            return self.reply(502, "Telegram error")
-        self.reply(200, "OK")
-
-
-ThreadingHTTPServer(("127.0.0.1", 8787), Handler).serve_forever()
-PYEOF
-cat > /etc/systemd/system/graveangels-orders.service <<'UNITEOF'
-[Unit]
-Description=graveangels.ru orders -> Telegram
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-EnvironmentFile=/etc/graveangels/orders.env
-Environment=PYTHONDONTWRITEBYTECODE=1
-ExecStart=/usr/bin/python3 /opt/graveangels/orders.py
-DynamicUser=yes
-ProtectSystem=strict
-ProtectHome=yes
-PrivateTmp=yes
-NoNewPrivileges=yes
-Restart=always
-RestartSec=3
-
-[Install]
-WantedBy=multi-user.target
-UNITEOF
-systemctl daemon-reload
-if [ "$TG" = 1 ]; then
-  if systemctl -q is-active graveangels-orders; then :
-  elif ss -tln | grep -q ':8787 '; then fail "порт 8787 занят другой программой"
-  fi
-  systemctl enable -q graveangels-orders
-  systemctl restart graveangels-orders
-  sleep 2
-  code=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d '{}' http://127.0.0.1:8787/ || true)
-  if [ "$code" = 400 ]; then echo "Сервис заказов работает."; else warn "Сервис заказов не отвечает. Журнал: journalctl -u graveangels-orders"; fi
-else
-  echo "Пропущено (Telegram не настроен)."
-fi
-
-say "5/6 Настраиваю nginx"
+say "4/6 Настраиваю nginx"
 echo 'limit_req_zone $binary_remote_addr zone=graveangels_orders:1m rate=10r/m;' > /etc/nginx/conf.d/graveangels-ratelimit.conf
 if [ -f /etc/nginx/sites-available/graveangels ]; then
   echo "Настройки nginx для сайта уже есть, оставляю."
@@ -227,6 +116,10 @@ server {
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
+    location /media/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
     location = /api/order {
         limit_req zone=graveangels_orders burst=5 nodelay;
         client_max_body_size 16k;
@@ -249,6 +142,9 @@ if command -v ufw >/dev/null && ufw status | grep -q 'Status: active'; then
 fi
 echo "nginx работает."
 
+say "5/6 Страница, сервис заказов, связь с CRM"
+bash "$APP/repo/deploy/site-setup.sh"
+
 say "6/6 Получаю сертификат https (Let's Encrypt)"
 HTTPS=0
 if certbot --nginx -n --agree-tos --register-unsafely-without-email --keep-until-expiring --redirect -d "$DOMAIN" -d "www.$DOMAIN"; then
@@ -263,3 +159,4 @@ say "Готово"
 if [ "$HTTPS" = 1 ]; then echo "Сайт:    https://$DOMAIN"; else echo "Сайт:    http://$DOMAIN"; fi
 if [ "$TG" = 1 ]; then echo "Заказы:  приходят в Telegram-бота"; else echo "Заказы:  через WhatsApp"; fi
 echo "Обновить сайт после изменений на GitHub:  bash $APP/update.sh"
+echo "CRM на этом же сервере:  bash $APP/repo/deploy/crm-install.sh"

@@ -4,18 +4,39 @@
 
 | Файл | Что это |
 | --- | --- |
-| `index.html` | Весь сайт: разметка, стили и форма заказа в одном файле |
+| `index.html` | Готовая страница — собирается из `site/` командой `python3 site/build.py` (на сервере — сама) |
+| `site/schema.json` | Какие блоки есть на странице и какие у них поля + текущие тексты (`initial`) — по нему CRM строит редактор |
+| `site/templates/` | Шаблоны страницы: по файлу на блок (`blocks/hero.html`, `blocks/prices.html` …) и форма заказа |
+| `site/build.py` | Сборка страницы; `sync` — забрать опубликованную версию из CRM (на сервере раз в минуту) |
+| `server/orders.py` | Сервис заказов: форма → Telegram и CRM |
 | `images/` | Фото (на сайте используются `.webp`) |
 | `fonts/` | Шрифты Cormorant Garamond и Manrope — грузятся с нашего сервера, без Google Fonts |
 | `deploy/install.sh` | Установка сайта на сервер с нуля |
 | `deploy/server-tune.sh` | Донастройка уже установленного сервера (HTTP/2, кэш) |
+| `deploy/site-setup.sh` | Страница из шаблонов, синхронизация с CRM, сервисы — и для перевода уже работающего сервера |
+| `deploy/crm-install.sh` | Mini CRM на этом же сервере (crm.graveangels.ru): готовые образы, подкачка, ограничения памяти |
+| `deploy/update.sh` | Что делает `/opt/graveangels/update.sh` после скачивания репозитория |
 | `worker/telegram-worker.js` | Старый посредник для Cloudflare — на сервере не нужен, оставлен на всякий случай |
+
+## Как менять тексты, цены и фото
+
+В CRM: **Сайт → Хранители памяти → Редактировать**. Блоки можно добавлять, скрывать (значок глаза), переставлять
+и копировать; после правок — **Опубликовать**, через минуту сайт обновится сам. Шапка и подвал всегда на своих местах.
+
+Новый тип блока или новое поле — правка `site/schema.json` и шаблона в `site/templates/blocks/`, затем на сервере
+`bash /opt/graveangels/update.sh`: сайт сам отправит новое описание в CRM. Формат описания — `docs/SITE.md` в репозитории CRM.
 
 ## Как устроено на сервере
 
 - **nginx** раздаёт сайт из `/var/www/graveangels`, сертификат https — Let's Encrypt, продлевается сам.
-- **Заказы с формы** идут на `/api/order` → сервис `graveangels-orders` (`/opt/graveangels/orders.py`) → Telegram-бот.
-  Токен бота и CHAT_ID лежат только на сервере: `/etc/graveangels/orders.env`.
+- **Заказы с формы** идут на `/api/order` → сервис `graveangels-orders` (`server/orders.py`) → Telegram-бот и CRM
+  (контакт, сделка и задача «Обработать заявку»). Токен бота, CHAT_ID и адрес формы CRM лежат только на сервере:
+  `/etc/graveangels/orders.env`. Заказ принят, если дошёл хотя бы до одного из них.
+- **Страница** собирается из `site/`: таймер `graveangels-site.timer` раз в минуту спрашивает CRM, нет ли новой
+  опубликованной версии, скачивает фото в `/var/www/graveangels/media/` и пересобирает `index.html`.
+  Связь с CRM — `/etc/graveangels/site.env`. Если CRM недоступна, на сайте остаётся последняя собранная версия.
+- **CRM** — `/opt/minicrm`, https://crm.graveangels.ru (Docker, готовые образы с GitHub). Обновление:
+  `bash /opt/graveangels/repo/deploy/crm-install.sh` (резервная копия, новые образы, откат при ошибке).
 - Outline VPN на том же сервере работает в Docker отдельно, сайт его не трогает.
 
 ## Обновить сайт после изменений на GitHub

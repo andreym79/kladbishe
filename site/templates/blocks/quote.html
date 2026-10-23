@@ -1,0 +1,10 @@
+{%- set b = block.data -%}
+<section class="sec dark">
+<div style="max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(244,241,235,0.14); padding-top: clamp(32px, 4vw, 48px)">
+<div style="display: flex; flex-direction: column; gap: 24px">
+{% if b.eyebrow %}{{ m.eyebrow(b.eyebrow) }}
+{% endif %}<p style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(30px, 3.4vw, 48px); line-height: 1.22">{{ b.quote | nl2br }}</p>
+{% if b.signature %}<p style="margin: 0; color: #CFCAC0">{{ b.signature }}</p>
+{% endif %}</div>
+</div>
+</section>

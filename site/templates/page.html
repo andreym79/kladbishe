@@ -1,0 +1,149 @@
+{#- Page of graveangels.ru. Rendered by site/build.py from the content edited in the CRM (module «Сайт»). -#}
+{%- import "macros.html" as m -%}
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ s.seo_title or s.brand }}</title>
+{% if s.seo_description %}<meta name="description" content="{{ s.seo_description }}">
+{% endif %}<meta property="og:title" content="{{ s.og_title or s.seo_title or s.brand }}">
+{% if s.og_description or s.seo_description %}<meta property="og:description" content="{{ s.og_description or s.seo_description }}">
+{% endif %}<meta property="og:type" content="website">
+<meta name="theme-color" content="#141414">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%95%AF%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="fonts/cormorant-garamond-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 600;font-display:swap;src:url(fonts/cormorant-garamond-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 600;font-display:swap;src:url(fonts/cormorant-garamond-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 600;font-display:swap;src:url(fonts/cormorant-garamond-shekel.woff2) format('woff2');unicode-range:U+20AA}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/manrope-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/manrope-shekel.woff2) format('woff2');unicode-range:U+20AA}
+body{margin:0;overflow-x:clip}
+*{box-sizing:border-box}
+a{color:#F4F1EB}a:hover{color:#FFFFFF}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .faq-plus{transform:rotate(45deg)}
+.of-input:focus{outline:2px solid #1F1F1F;outline-offset:1px;border-color:#1F1F1F}
+.of-input::placeholder{color:#9A958B}
+@media (max-width:760px){.nav-links{display:none !important}}
+.sec{padding:clamp(48px, 6vw, 88px) clamp(20px, 5vw, 80px)}
+.sec.dark{background:#141414;color:#F4F1EB}
+.sec.hero{padding-top:clamp(48px, 6vw, 96px);padding-bottom:clamp(48px, 6vw, 96px)}
+.sec.big{padding-top:clamp(56px, 7vw, 104px);padding-bottom:clamp(56px, 7vw, 104px);text-align:center}
+.sec.light+.sec.light,.sec.dark+.sec.dark{padding-top:0}
+</style>
+<style>
+.of-field{display:flex;flex-direction:column;gap:10px}
+.of-field label{font-weight:700;font-size:17px}
+.of-input{width:100%;min-height:56px;padding:0 18px;border:1.5px solid #A39E93;border-radius:10px;background:#FFFFFF;font-family:inherit;font-size:18px;color:#1F1F1F}
+.of-radio{display:flex;align-items:center;gap:14px;min-height:60px;padding:12px 18px;border-radius:10px;border:1.5px solid #A39E93;background:#FBFAF7;cursor:pointer;font-weight:600}
+.of-radio input{position:absolute;opacity:0;width:1px;height:1px}
+.of-dot{width:24px;height:24px;border-radius:999px;border:2px solid #8C877D;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.of-rlabel{flex-grow:1}
+.of-price{color:#5C5850;font-size:16px;white-space:nowrap}
+.of-radio:has(input:checked){border-color:#1F1F1F;background:#EFE8DA;font-weight:700}
+.of-radio:has(input:checked) .of-dot{background:#1F1F1F;border-color:#1F1F1F}
+.of-radio:has(input:checked) .of-dot::after{content:"";width:8px;height:8px;border-radius:999px;background:#FBFAF7}
+.of-radio:has(input:focus-visible){outline:2px solid #1F1F1F;outline-offset:2px}
+#order-overlay[hidden],#order-form[hidden],#order-success[hidden]{display:none !important}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #0038B8;outline-offset:3px}
+#order-submit:disabled{opacity:.6;cursor:wait}
+</style>
+</head>
+<body>
+<div style="font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; color: #1F1F1F; background: #F4F1EB; font-size: 18px; line-height: 1.6">
+{% for block in blocks %}
+{% include "blocks/" ~ block.type ~ ".html" %}
+{% endfor %}
+{% include "order-form.html" %}
+</div>
+<script>
+(function () {
+  // Filled in by site/build.py: '/api/order' when the server forwards orders; empty → the order opens in WhatsApp.
+  var ORDER_ENDPOINT = '{{ order_endpoint }}';  // single quotes: the server's older update script looks for this line
+  var WHATSAPP_NUMBER = {{ s.whatsapp | tojson }};
+
+  var TARIFFS = {{ tariffs_js | tojson }};
+  var overlay = document.getElementById('order-overlay');
+  var form = document.getElementById('order-form');
+  var success = document.getElementById('order-success');
+  var errorBox = document.getElementById('order-error');
+  var submitBtn = document.getElementById('order-submit');
+  var lastFocus = null;
+
+  function showError(msg) { errorBox.textContent = msg; errorBox.hidden = false; }
+
+  function open(tariff) {
+    lastFocus = document.activeElement;
+    form.reset();
+    var radio = form.querySelector('input[name="tariff"][value="' + (TARIFFS[tariff] ? tariff : Object.keys(TARIFFS)[0]) + '"]');
+    if (radio) radio.checked = true;
+    errorBox.hidden = true;
+    form.hidden = false;
+    success.hidden = true; success.style.display = 'none';
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('of-name').focus();
+  }
+
+  function close() {
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function done() {
+    form.hidden = true;
+    success.hidden = false; success.style.display = 'flex';
+    success.querySelector('.js-close').focus();
+  }
+
+  document.querySelectorAll('[data-order]').forEach(function (btn) {
+    btn.addEventListener('click', function () { open(btn.getAttribute('data-order')); });
+  });
+  overlay.querySelectorAll('.js-close').forEach(function (b) { b.addEventListener('click', close); });
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = new FormData(form);
+    var order = {
+      name: (d.get('name') || '').trim(),
+      phone: (d.get('phone') || '').trim(),
+      cemetery: (d.get('cemetery') || '').trim(),
+      grave: (d.get('grave') || '').trim(),
+      tariff: TARIFFS[d.get('tariff')] || '',
+      info: (d.get('info') || '').trim(),
+      website: d.get('website') || ''
+    };
+    if (!order.name || !order.phone || !order.cemetery) {
+      showError('Заполните имя, телефон и кладбище.');
+      return;
+    }
+    errorBox.hidden = true;
+
+    if (!ORDER_ENDPOINT) {
+      var text = 'Заказ с сайта\n\nИмя: ' + order.name + '\nТелефон: ' + order.phone +
+        '\nКладбище: ' + order.cemetery + (order.grave ? '\nИмя на могиле: ' + order.grave : '') +
+        '\nТариф: ' + order.tariff + (order.info ? '\nДополнительно: ' + order.info : '');
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+      done();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем…';
+    fetch(ORDER_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(order) })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); done(); })
+      .catch(function () { showError('Не удалось отправить заказ. Напишите нам в WhatsApp: +' + WHATSAPP_NUMBER + '.'); })
+      .then(function () { submitBtn.disabled = false; submitBtn.textContent = 'Отправить'; });
+  });
+})();
+</script>
+</body>
+</html>
